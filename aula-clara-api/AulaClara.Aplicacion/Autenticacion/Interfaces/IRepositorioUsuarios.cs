@@ -6,5 +6,7 @@ public interface IRepositorioUsuarios
 {
     Task<bool> ExisteEmailAsync(string email);
 
+    Task<Usuario?> ObtenerPorEmailAsync(string email);
+
     Task AgregarAsync(Usuario usuario);
 }

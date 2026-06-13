@@ -20,6 +20,12 @@ public class RepositorioUsuarios : IRepositorioUsuarios
             .AnyAsync(usuario => usuario.Email == email);
     }
 
+    public async Task<Usuario?> ObtenerPorEmailAsync(string email)
+    {
+        return await _contexto.Usuarios
+            .FirstOrDefaultAsync(usuario => usuario.Email == email);
+    }
+
     public async Task AgregarAsync(Usuario usuario)
     {
         _contexto.Usuarios.Add(usuario);

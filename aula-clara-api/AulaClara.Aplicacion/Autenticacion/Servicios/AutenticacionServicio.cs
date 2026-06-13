@@ -54,4 +54,38 @@ public class AutenticacionServicio : IAutenticacionServicio
             Email = usuario.Email
         };
     }
+
+    public async Task<InicioSesionRespuesta> IniciarSesionAsync(IniciarSesionSolicitud solicitud)
+    {
+        var email = solicitud.Email.Trim().ToLower();
+        var contrasenia = solicitud.Contrasenia;
+
+        if (string.IsNullOrWhiteSpace(email))
+            throw new InvalidOperationException("El email es obligatorio.");
+
+        if (string.IsNullOrWhiteSpace(contrasenia))
+            throw new InvalidOperationException("La contrasenia es obligatoria.");
+
+        var usuario = await _repositorioUsuarios.ObtenerPorEmailAsync(email);
+
+        if (usuario is null)
+            throw new InvalidOperationException("Credenciales invalidas.");
+
+        if (!usuario.Activo)
+            throw new InvalidOperationException("El usuario se encuentra inactivo.");
+
+        var contraseniaValida = _servicioContrasenias.Verificar(
+            usuario.HashContrasenia,
+            contrasenia);
+
+        if (!contraseniaValida)
+            throw new InvalidOperationException("Credenciales invalidas.");
+
+        return new InicioSesionRespuesta
+        {
+            Id = usuario.Id,
+            Nombre = usuario.Nombre,
+            Email = usuario.Email
+        };
+    }
 }

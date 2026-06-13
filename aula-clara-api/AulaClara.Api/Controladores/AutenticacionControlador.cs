@@ -32,4 +32,22 @@ public class AutenticacionControlador : ControllerBase
             });
         }
     }
+
+    [HttpPost("login")]
+    public async Task<IActionResult> IniciarSesion(IniciarSesionSolicitud solicitud)
+    {
+        try
+        {
+            var respuesta = await _autenticacionServicio.IniciarSesionAsync(solicitud);
+
+            return Ok(respuesta);
+        }
+        catch (InvalidOperationException excepcion)
+        {
+            return BadRequest(new
+            {
+                mensaje = excepcion.Message
+            });
+        }
+    }
 }

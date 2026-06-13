@@ -5,4 +5,6 @@ namespace AulaClara.Aplicacion.Autenticacion.Interfaces;
 public interface IAutenticacionServicio
 {
     Task<UsuarioRegistradoRespuesta> RegistrarAsync(RegistrarUsuarioSolicitud solicitud);
+
+    Task<InicioSesionRespuesta> IniciarSesionAsync(IniciarSesionSolicitud solicitud);
 }
