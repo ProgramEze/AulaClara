@@ -1,0 +1,6 @@
+<Solution>
+  <Project Path="AulaClara.Api/AulaClara.Api.csproj" />
+  <Project Path="AulaClara.Aplicacion/AulaClara.Aplicacion.csproj" />
+  <Project Path="AulaClara.Dominio/AulaClara.Dominio.csproj" />
+  <Project Path="AulaClara.Infraestructura/AulaClara.Infraestructura.csproj" />
+</Solution>
