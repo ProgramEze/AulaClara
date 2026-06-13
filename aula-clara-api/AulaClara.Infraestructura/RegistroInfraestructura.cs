@@ -2,6 +2,7 @@ using AulaClara.Infraestructura.Persistencia;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using AulaClara.Infraestructura.Repositorios;
 
 namespace AulaClara.Infraestructura;
 
@@ -19,6 +20,7 @@ public static class RegistroInfraestructura
         {
             opciones.UseSqlite(cadenaConexion);
         });
+
 
         return servicios;
     }
