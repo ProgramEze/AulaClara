@@ -1,8 +1,10 @@
+using AulaClara.Aplicacion.Autenticacion.Interfaces;
+using AulaClara.Infraestructura.Autenticacion;
 using AulaClara.Infraestructura.Persistencia;
+using AulaClara.Infraestructura.Repositorios;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using AulaClara.Infraestructura.Repositorios;
 
 namespace AulaClara.Infraestructura;
 
@@ -21,6 +23,8 @@ public static class RegistroInfraestructura
             opciones.UseSqlite(cadenaConexion);
         });
 
+        servicios.AddScoped<IServicioContrasenias, ServicioContrasenias>();
+        servicios.AddScoped<IRepositorioUsuarios, RepositorioUsuarios>();
 
         return servicios;
     }
