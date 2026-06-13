@@ -15,4 +15,6 @@ public class Usuario : EntidadBase
     public List<Alumno> Alumnos { get; set; } = new();
 
     public List<Materia> Materias { get; set; } = new();
+
+    public List<Clase> Clases { get; set; } = new();
 }

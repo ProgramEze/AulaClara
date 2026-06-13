@@ -15,4 +15,6 @@ public class Materia : EntidadBase
     public bool Activa { get; set; } = true;
 
     public List<AlumnoMateria> AlumnoMaterias { get; set; } = new();
+
+    public List<Clase> Clases { get; set; } = new();
 }
