@@ -1,5 +1,7 @@
 using AulaClara.Aplicacion.Alumnos.Interfaces;
 using AulaClara.Aplicacion.Alumnos.Servicios;
+using AulaClara.Aplicacion.Materias.Interfaces;
+using AulaClara.Aplicacion.Materias.Servicios;
 using AulaClara.Aplicacion.Autenticacion.Interfaces;
 using AulaClara.Aplicacion.Autenticacion.Servicios;
 using AulaClara.Infraestructura;
@@ -68,7 +70,8 @@ builder.Services
 
 builder.Services.AddScoped<IAutenticacionServicio, AutenticacionServicio>();
 builder.Services.AddScoped<IAlumnoServicio, AlumnoServicio>();
-
+builder.Services.AddScoped<IAlumnoServicio, AlumnoServicio>();
+builder.Services.AddScoped<IMateriaServicio, MateriaServicio>();
 builder.Services.AgregarInfraestructura(builder.Configuration);
 
 var app = builder.Build();
