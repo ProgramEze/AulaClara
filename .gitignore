@@ -3,6 +3,9 @@
 ##
 ## Get latest from `dotnet new gitignore`
 
+# Scripts locales de prueba
+scripts/login-local.ps1
+
 # dotenv files
 .env
 
