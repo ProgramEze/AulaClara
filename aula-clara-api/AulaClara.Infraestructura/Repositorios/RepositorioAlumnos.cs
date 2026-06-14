@@ -36,4 +36,9 @@ public class RepositorioAlumnos : IRepositorioAlumnos
         _contexto.Alumnos.Add(alumno);
         await _contexto.SaveChangesAsync();
     }
+
+    public async Task GuardarCambiosAsync()
+    {
+        await _contexto.SaveChangesAsync();
+    }
 }

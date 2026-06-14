@@ -1,16 +1,43 @@
+using AulaClara.Aplicacion.Alumnos.Interfaces;
+using AulaClara.Aplicacion.Alumnos.Servicios;
 using AulaClara.Aplicacion.Autenticacion.Interfaces;
 using AulaClara.Aplicacion.Autenticacion.Servicios;
 using AulaClara.Infraestructura;
-using Microsoft.IdentityModel.Tokens;
-using System.Text;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
-using AulaClara.Aplicacion.Alumnos.Servicios;
-using AulaClara.Aplicacion.Alumnos.Interfaces;
+using Microsoft.IdentityModel.Tokens;
+using Microsoft.OpenApi;
+using System.Text;
+
 var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddControllers();
 
-builder.Services.AddOpenApi();
+builder.Services.AddSwaggerGen(opciones =>
+{
+    opciones.SwaggerDoc("v1", new OpenApiInfo
+    {
+        Title = "Aula Clara API",
+        Version = "v1"
+    });
+
+    opciones.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme
+    {
+        Description = "Ingresá el token con el formato: Bearer {tu token JWT}",
+        Name = "Authorization",
+        In = ParameterLocation.Header,
+        Type = SecuritySchemeType.ApiKey,
+        Scheme = "Bearer"
+    });
+
+    opciones.AddSecurityRequirement(documento =>
+        new OpenApiSecurityRequirement
+        {
+            {
+                new OpenApiSecuritySchemeReference("Bearer", documento),
+                new List<string>()
+            }
+        });
+});
 
 var claveJwt = builder.Configuration["Jwt:Clave"]
     ?? throw new InvalidOperationException("No se encontro la clave JWT.");
@@ -48,11 +75,11 @@ var app = builder.Build();
 
 if (app.Environment.IsDevelopment())
 {
-    app.MapOpenApi();
+    app.UseSwagger();
 
     app.UseSwaggerUI(opciones =>
     {
-        opciones.SwaggerEndpoint("/openapi/v1.json", "Aula Clara API v1");
+        opciones.SwaggerEndpoint("/swagger/v1/swagger.json", "Aula Clara API v1");
     });
 }
 

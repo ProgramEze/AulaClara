@@ -9,4 +9,6 @@ public interface IRepositorioAlumnos
     Task<Alumno?> ObtenerPorIdYUsuarioAsync(Guid id, Guid usuarioId);
 
     Task AgregarAsync(Alumno alumno);
+
+    Task GuardarCambiosAsync();
 }
