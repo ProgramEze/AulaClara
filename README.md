@@ -204,15 +204,78 @@ Ejemplo de respuesta:
 
 ---
 
-### Próxima etapa - Gestión protegida de alumnos
+### Etapa 6 - Gestión protegida de alumnos
 
-Estado: pendiente.
+Estado: completada.
 
-El siguiente paso será implementar el primer módulo real protegido por autenticación.
+Se implementó el primer módulo real protegido por autenticación JWT.
 
-Objetivo inicial:
+Funcionalidades agregadas:
 
 - Crear alumnos asociados al usuario autenticado.
 - Listar solo los alumnos del usuario autenticado.
-- Consultar alumno por ID validando pertenencia.
-- Evitar que un usuario acceda a alumnos de otro usuario.
+- Consultar un alumno por ID validando que pertenezca al usuario autenticado.
+- Proteger los endpoints con `[Authorize]`.
+- Obtener el `UsuarioId` desde los claims del token JWT.
+- Evitar que el cliente envíe `UsuarioId` desde el body.
+
+Endpoints disponibles:
+
+```http
+POST /api/alumnos
+```
+
+Ejemplo de request:
+
+```json
+{
+	"nombre": "Zoe",
+	"edad": 12,
+	"observaciones": "Necesita consignas simples y ejemplos concretos.",
+	"responsableNombre": "Madre de Zoe",
+	"responsableContacto": "contacto de prueba"
+}
+```
+
+Ejemplo de respuesta:
+
+```json
+{
+	"id": "guid-del-alumno",
+	"nombre": "Zoe",
+	"edad": 12,
+	"observaciones": "Necesita consignas simples y ejemplos concretos.",
+	"responsableNombre": "Madre de Zoe",
+	"responsableContacto": "contacto de prueba",
+	"activo": true
+}
+```
+
+---
+
+```http
+GET /api/alumnos
+```
+
+Devuelve solamente los alumnos del usuario autenticado.
+
+---
+
+```http
+GET /api/alumnos/{id}
+```
+
+Devuelve el alumno solicitado solo si pertenece al usuario autenticado.
+
+---
+
+### Próxima etapa - Edición y baja lógica de alumnos
+
+Estado: pendiente.
+
+El siguiente paso será completar el CRUD de alumnos agregando:
+
+- Actualizar datos de un alumno.
+- Dar de baja lógica a un alumno.
+- Validar pertenencia del alumno al usuario autenticado.
+- Evitar borrado físico de información.
