@@ -63,12 +63,3 @@ app.UseAuthorization();
 app.MapControllers();
 
 app.Run();
-
-/*
-{
-  "email": "ezequiel@test.com",
-  "contrasenia": "123456"
-}
-
-bearer: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJodHRwOi8vc2NoZW1hcy54bWxzb2FwLm9yZy93cy8yMDA1LzA1L2lkZW50aXR5L2NsYWltcy9uYW1laWRlbnRpZmllciI6IjQyMWE4MTgyLTJiNjktNDA3OC1iNWU3LWFiNmQ4YjM0ZjM3NyIsImh0dHA6Ly9zY2hlbWFzLnhtbHNvYXAub3JnL3dzLzIwMDUvMDUvaWRlbnRpdHkvY2xhaW1zL25hbWUiOiJFemVxdWllbCIsImh0dHA6Ly9zY2hlbWFzLnhtbHNvYXAub3JnL3dzLzIwMDUvMDUvaWRlbnRpdHkvY2xhaW1zL2VtYWlsYWRkcmVzcyI6ImV6ZXF1aWVsQHRlc3QuY29tIiwiZXhwIjoxNzgxNDU4NjI1LCJpc3MiOiJBdWxhQ2xhcmEuQXBpIiwiYXVkIjoiQXVsYUNsYXJhLkNsaWVudGUifQ.xjM-Cb1CMQNbkSgRrN5rnF3nypMYXKxIzKvlI2oku1Y
-*/
