@@ -1,6 +1,7 @@
 using AulaClara.Aplicacion.Alumnos.Interfaces;
 using AulaClara.Aplicacion.Materias.Interfaces;
 using AulaClara.Aplicacion.Autenticacion.Interfaces;
+using AulaClara.Aplicacion.AlumnoMaterias.Interfaces;
 using AulaClara.Infraestructura.Autenticacion;
 using AulaClara.Infraestructura.Persistencia;
 using AulaClara.Infraestructura.Repositorios;
@@ -30,7 +31,7 @@ public static class RegistroInfraestructura
         servicios.AddScoped<IRepositorioUsuarios, RepositorioUsuarios>();
         servicios.AddScoped<IRepositorioAlumnos, RepositorioAlumnos>();
         servicios.AddScoped<IRepositorioMaterias, RepositorioMaterias>();
-
+        servicios.AddScoped<IRepositorioAlumnoMaterias, RepositorioAlumnoMaterias>();
         return servicios;
     }
 }
