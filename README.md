@@ -269,13 +269,96 @@ Devuelve el alumno solicitado solo si pertenece al usuario autenticado.
 
 ---
 
-### Próxima etapa - Edición y baja lógica de alumnos
+### Etapa 7 - Edición y baja lógica de alumnos
+
+Estado: completada.
+
+Se completó el CRUD inicial de alumnos agregando edición y baja lógica.
+
+Funcionalidades agregadas:
+
+- Actualizar los datos de un alumno propio.
+- Dar de baja lógica a un alumno propio.
+- Mantener la validación de pertenencia mediante el `UsuarioId` obtenido desde el JWT.
+- Evitar el borrado físico de información.
+- Excluir alumnos dados de baja de los listados y búsquedas activas.
+- Probar los endpoints protegidos desde Swagger usando el botón `Authorize` con token Bearer.
+
+Endpoints agregados:
+
+```http
+PUT /api/alumnos/{id}
+```
+
+Ejemplo de request:
+
+```json
+{
+	"nombre": "Fefi",
+	"edad": 32,
+	"observaciones": "Necesita paciencia y un lugar tranquilo para estudiar, es aplicado pero no tiene paciencia.",
+	"responsableNombre": "El mismo",
+	"responsableContacto": "contacto de prueba"
+}
+```
+
+Ejemplo de respuesta:
+
+```json
+{
+	"id": "guid-del-alumno",
+	"nombre": "Fefi",
+	"edad": 32,
+	"observaciones": "Necesita paciencia y un lugar tranquilo para estudiar, es aplicado pero no tiene paciencia.",
+	"responsableNombre": "El mismo",
+	"responsableContacto": "contacto de prueba",
+	"activo": true
+}
+```
+
+---
+
+```http
+DELETE /api/alumnos/{id}
+```
+
+Realiza una baja lógica del alumno. No elimina físicamente el registro de la base de datos.
+
+Respuesta esperada:
+
+```http
+204 No Content
+```
+
+---
+
+### Mejora de pruebas - Swagger con Bearer
+
+Estado: completada.
+
+Se configuró Swagger para permitir autenticación desde el botón `Authorize`.
+
+Uso esperado:
+
+```http
+Authorization: Bearer jwt-generado
+```
+
+Esto permite probar endpoints protegidos directamente desde Swagger sin cargar manualmente el header en cada request.
+
+---
+
+### Próxima etapa - Gestión protegida de materias
 
 Estado: pendiente.
 
-El siguiente paso será completar el CRUD de alumnos agregando:
+El siguiente paso será implementar el módulo de materias asociado al usuario autenticado.
 
-- Actualizar datos de un alumno.
-- Dar de baja lógica a un alumno.
-- Validar pertenencia del alumno al usuario autenticado.
-- Evitar borrado físico de información.
+Objetivo inicial:
+
+- Crear materias propias del usuario autenticado.
+- Listar materias propias.
+- Consultar una materia por ID validando pertenencia.
+- Actualizar una materia propia.
+- Dar de baja lógica una materia propia.
+- Evitar que un usuario acceda a materias de otro usuario.
