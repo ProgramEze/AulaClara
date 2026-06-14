@@ -8,13 +8,16 @@ public class AutenticacionServicio : IAutenticacionServicio
 {
     private readonly IRepositorioUsuarios _repositorioUsuarios;
     private readonly IServicioContrasenias _servicioContrasenias;
+    private readonly IServicioTokens _servicioTokens;
 
     public AutenticacionServicio(
-        IRepositorioUsuarios repositorioUsuarios,
-        IServicioContrasenias servicioContrasenias)
+    IRepositorioUsuarios repositorioUsuarios,
+    IServicioContrasenias servicioContrasenias,
+    IServicioTokens servicioTokens)
     {
         _repositorioUsuarios = repositorioUsuarios;
         _servicioContrasenias = servicioContrasenias;
+        _servicioTokens = servicioTokens;
     }
 
     public async Task<UsuarioRegistradoRespuesta> RegistrarAsync(RegistrarUsuarioSolicitud solicitud)
@@ -81,11 +84,15 @@ public class AutenticacionServicio : IAutenticacionServicio
         if (!contraseniaValida)
             throw new InvalidOperationException("Credenciales invalidas.");
 
+        var tokenGenerado = _servicioTokens.GenerarToken(usuario);
+
         return new InicioSesionRespuesta
         {
             Id = usuario.Id,
             Nombre = usuario.Nombre,
-            Email = usuario.Email
+            Email = usuario.Email,
+            Token = tokenGenerado.Token,
+            ExpiraEnUtc = tokenGenerado.ExpiraEnUtc
         };
     }
 }

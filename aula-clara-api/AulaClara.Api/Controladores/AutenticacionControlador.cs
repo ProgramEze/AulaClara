@@ -1,6 +1,8 @@
 using AulaClara.Aplicacion.Autenticacion.Dtos;
 using AulaClara.Aplicacion.Autenticacion.Interfaces;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Authorization;
+using System.Security.Claims;
 
 namespace AulaClara.Api.Controladores;
 
@@ -49,5 +51,21 @@ public class AutenticacionControlador : ControllerBase
                 mensaje = excepcion.Message
             });
         }
+    }
+
+    [Authorize]
+    [HttpGet("perfil")]
+    public IActionResult ObtenerPerfil()
+    {
+        var usuarioId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+        var nombre = User.FindFirstValue(ClaimTypes.Name);
+        var email = User.FindFirstValue(ClaimTypes.Email);
+
+        return Ok(new
+        {
+            id = usuarioId,
+            nombre,
+            email
+        });
     }
 }

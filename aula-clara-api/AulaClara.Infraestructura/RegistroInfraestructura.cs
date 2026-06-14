@@ -25,6 +25,7 @@ public static class RegistroInfraestructura
 
         servicios.AddScoped<IServicioContrasenias, ServicioContrasenias>();
         servicios.AddScoped<IRepositorioUsuarios, RepositorioUsuarios>();
+        servicios.AddScoped<IServicioTokens, ServicioTokens>();
 
         return servicios;
     }
