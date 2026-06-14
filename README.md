@@ -448,17 +448,95 @@ Respuesta esperada:
 
 ---
 
-### Próxima etapa - Asociación entre alumnos y materias
+### Etapa 9 - Asociación entre alumnos y materias
 
-Estado: pendiente.
+Estado: completada.
 
-El siguiente paso será permitir vincular alumnos con materias.
+Se implementó el módulo para vincular alumnos propios con materias propias.
 
-Objetivo inicial:
+Funcionalidades agregadas:
 
-- Asociar un alumno propio con una materia propia.
+- Asociar un alumno activo con una materia activa del usuario autenticado.
 - Listar las materias asociadas a un alumno.
 - Listar los alumnos asociados a una materia.
 - Evitar asociaciones duplicadas.
+- Reactivar una asociación previamente dada de baja en lugar de crear una fila duplicada.
 - Validar que tanto el alumno como la materia pertenezcan al usuario autenticado.
-- Permitir baja lógica o eliminación controlada de la asociación.
+- Dar de baja lógica una asociación entre alumno y materia.
+
+Endpoints agregados:
+
+```http
+POST /api/alumno-materias
+```
+
+Ejemplo de request:
+
+```json
+{
+	"alumnoId": "guid-del-alumno",
+	"materiaId": "guid-de-la-materia"
+}
+```
+
+Ejemplo de respuesta:
+
+```json
+{
+	"id": "guid-de-la-asociacion",
+	"alumnoId": "guid-del-alumno",
+	"alumnoNombre": "Fefi",
+	"materiaId": "guid-de-la-materia",
+	"materiaNombre": "Ingles",
+	"fechaAsignacionUtc": "fecha-utc",
+	"activa": true
+}
+```
+
+---
+
+```http
+GET /api/alumno-materias/alumnos/{alumnoId}/materias
+```
+
+Devuelve las materias activas asociadas al alumno indicado, siempre que el alumno pertenezca al usuario autenticado.
+
+---
+
+```http
+GET /api/alumno-materias/materias/{materiaId}/alumnos
+```
+
+Devuelve los alumnos activos asociados a la materia indicada, siempre que la materia pertenezca al usuario autenticado.
+
+---
+
+```http
+DELETE /api/alumno-materias/{id}
+```
+
+Realiza una baja lógica de la asociación. No elimina físicamente el registro de la base de datos.
+
+Respuesta esperada:
+
+```http
+204 No Content
+```
+
+---
+
+### Próxima etapa - Gestión protegida de clases
+
+Estado: pendiente.
+
+El siguiente paso será implementar el módulo de clases usando las relaciones ya existentes entre usuario, alumno y materia.
+
+Objetivo inicial:
+
+- Crear clases asociadas a un alumno propio y una materia propia.
+- Listar clases del usuario autenticado.
+- Consultar una clase por ID validando pertenencia.
+- Actualizar datos principales de una clase.
+- Cambiar el estado de una clase.
+- Dar de baja lógica o cancelar clases según la regla de negocio que definamos.
+- Evitar que un usuario acceda a clases, alumnos o materias de otro usuario.
