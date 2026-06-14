@@ -100,7 +100,7 @@ La base de datos local se genera como archivo SQLite y no se versiona en GitHub.
 
 ### Etapa 4 - Autenticación inicial
 
-Estado: en progreso.
+Estado: completada.
 
 Se implementaron las primeras funcionalidades de autenticación:
 
@@ -109,9 +109,9 @@ Se implementaron las primeras funcionalidades de autenticación:
 - Validación de email duplicado.
 - Login básico con email y contraseña.
 
-> Nota: el login todavía no devuelve JWT. La generación de token será el siguiente paso de autenticación.
+Esta etapa dejó preparada la base para incorporar autenticación con JWT.
 
-Endpoints disponibles:
+Endpoint disponible:
 
 ```http
 POST /api/autenticacion/registro
@@ -139,6 +139,22 @@ Ejemplo de respuesta:
 
 ---
 
+### Etapa 5 - Autenticación con JWT
+
+Estado: completada.
+
+Se extendió el login para generar un token JWT después de validar email y contraseña.
+
+Se agregó:
+
+- Generación de token JWT.
+- Configuración de emisor, audiencia y expiración.
+- Clave secreta local mediante user-secrets.
+- Endpoint protegido con `[Authorize]`.
+- Lectura de claims del usuario autenticado.
+
+Endpoints disponibles:
+
 ```http
 POST /api/autenticacion/login
 ```
@@ -158,6 +174,45 @@ Ejemplo de respuesta:
 {
 	"id": "guid-del-usuario",
 	"nombre": "Ezequiel",
+	"email": "ezequiel@test.com",
+	"token": "jwt-generado",
+	"expiraEnUtc": "fecha-de-expiracion-utc"
+}
+```
+
+---
+
+```http
+GET /api/autenticacion/perfil
+```
+
+Este endpoint requiere enviar el token JWT en el header `Authorization`:
+
+```http
+Authorization: Bearer jwt-generado
+```
+
+Ejemplo de respuesta:
+
+```json
+{
+	"id": "guid-del-usuario",
+	"nombre": "Ezequiel",
 	"email": "ezequiel@test.com"
 }
 ```
+
+---
+
+### Próxima etapa - Gestión protegida de alumnos
+
+Estado: pendiente.
+
+El siguiente paso será implementar el primer módulo real protegido por autenticación.
+
+Objetivo inicial:
+
+- Crear alumnos asociados al usuario autenticado.
+- Listar solo los alumnos del usuario autenticado.
+- Consultar alumno por ID validando pertenencia.
+- Evitar que un usuario acceda a alumnos de otro usuario.
