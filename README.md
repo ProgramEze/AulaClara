@@ -348,17 +348,117 @@ Esto permite probar endpoints protegidos directamente desde Swagger sin cargar m
 
 ---
 
-### Próxima etapa - Gestión protegida de materias
+### Etapa 8 - Gestión protegida de materias
+
+Estado: completada.
+
+Se implementó el módulo de materias asociado al usuario autenticado.
+
+Funcionalidades agregadas:
+
+- Crear materias propias del usuario autenticado.
+- Listar solo las materias activas del usuario autenticado.
+- Consultar una materia por ID validando que pertenezca al usuario autenticado.
+- Actualizar una materia propia.
+- Dar de baja lógica una materia propia.
+- Validar nombres duplicados por usuario.
+- Evitar que un usuario acceda a materias de otro usuario.
+
+Endpoints agregados:
+
+```http
+POST /api/materias
+```
+
+Ejemplo de request:
+
+```json
+{
+	"nombre": "Ingles",
+	"descripcion": "Clases de ingles para nivel inicial e intermedio"
+}
+```
+
+Ejemplo de respuesta:
+
+```json
+{
+	"id": "guid-de-la-materia",
+	"nombre": "Ingles",
+	"descripcion": "Clases de ingles para nivel inicial e intermedio",
+	"activa": true
+}
+```
+
+---
+
+```http
+GET /api/materias
+```
+
+Devuelve solamente las materias activas del usuario autenticado.
+
+---
+
+```http
+GET /api/materias/{id}
+```
+
+Devuelve la materia solicitada solo si pertenece al usuario autenticado.
+
+---
+
+```http
+PUT /api/materias/{id}
+```
+
+Ejemplo de request:
+
+```json
+{
+	"nombre": "Ingles",
+	"descripcion": "Clases de ingles con practica oral, lectura y ejercicios"
+}
+```
+
+Ejemplo de respuesta:
+
+```json
+{
+	"id": "guid-de-la-materia",
+	"nombre": "Ingles",
+	"descripcion": "Clases de ingles con practica oral, lectura y ejercicios",
+	"activa": true
+}
+```
+
+---
+
+```http
+DELETE /api/materias/{id}
+```
+
+Realiza una baja lógica de la materia. No elimina físicamente el registro de la base de datos.
+
+Respuesta esperada:
+
+```http
+204 No Content
+```
+
+---
+
+### Próxima etapa - Asociación entre alumnos y materias
 
 Estado: pendiente.
 
-El siguiente paso será implementar el módulo de materias asociado al usuario autenticado.
+El siguiente paso será permitir vincular alumnos con materias.
 
 Objetivo inicial:
 
-- Crear materias propias del usuario autenticado.
-- Listar materias propias.
-- Consultar una materia por ID validando pertenencia.
-- Actualizar una materia propia.
-- Dar de baja lógica una materia propia.
-- Evitar que un usuario acceda a materias de otro usuario.
+- Asociar un alumno propio con una materia propia.
+- Listar las materias asociadas a un alumno.
+- Listar los alumnos asociados a una materia.
+- Evitar asociaciones duplicadas.
+- Validar que tanto el alumno como la materia pertenezcan al usuario autenticado.
+- Permitir baja lógica o eliminación controlada de la asociación.
