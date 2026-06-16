@@ -525,18 +525,141 @@ Respuesta esperada:
 
 ---
 
-### Próxima etapa - Gestión protegida de clases
+### Etapa 10 - Gestión protegida de clases
+
+Estado: completada.
+
+Se implementó el módulo de clases asociado al usuario autenticado.
+
+Decisión de diseño aplicada:
+
+- Una clase se asocia a `AlumnoMateriaId`, no a `AlumnoId` y `MateriaId` por separado.
+- La asociación `AlumnoMateria` representa la relación real entre un alumno y una materia.
+- Desde la clase se recuperan los datos del alumno y de la materia a través de esa asociación.
+- Se mantiene `UsuarioId` en `Clase` para validar pertenencia y simplificar consultas protegidas.
+
+Funcionalidades agregadas:
+
+- Crear clases usando una asociación activa entre alumno y materia.
+- Listar solo las clases del usuario autenticado.
+- Consultar una clase por ID validando pertenencia.
+- Actualizar los datos principales de una clase propia.
+- Marcar una clase planificada como realizada.
+- Cancelar una clase planificada.
+- Evitar que una clase cancelada pueda marcarse como realizada.
+- Evitar que una clase realizada pueda cancelarse.
+- Evitar que un usuario acceda a clases de otro usuario.
+
+Reglas de estado:
+
+```txt
+Planificada -> Realizada
+Planificada -> Cancelada
+Realizada -> no se puede cancelar
+Cancelada -> no se puede realizar
+```
+
+Endpoints agregados:
+
+```http
+POST /api/clases
+```
+
+Ejemplo de request:
+
+```json
+{
+	"alumnoMateriaId": "guid-de-la-asociacion",
+	"fechaClaseUtc": "2026-06-14T18:00:00Z",
+	"titulo": "Clase inicial de presente simple",
+	"objetivo": "Repasar estructura basica del presente simple",
+	"contenidoTrabajado": "Afirmativo, negativo y preguntas simples",
+	"observaciones": "La alumna respondio bien a ejemplos cortos"
+}
+```
+
+Ejemplo de respuesta:
+
+```json
+{
+	"id": "guid-de-la-clase",
+	"alumnoMateriaId": "guid-de-la-asociacion",
+	"alumnoId": "guid-del-alumno",
+	"alumnoNombre": "Zoe",
+	"materiaId": "guid-de-la-materia",
+	"materiaNombre": "Ingles",
+	"fechaClaseUtc": "2026-06-14T18:00:00Z",
+	"titulo": "Clase inicial de presente simple",
+	"objetivo": "Repasar estructura basica del presente simple",
+	"contenidoTrabajado": "Afirmativo, negativo y preguntas simples",
+	"observaciones": "La alumna respondio bien a ejemplos cortos",
+	"estado": 1
+}
+```
+
+---
+
+```http
+GET /api/clases
+```
+
+Devuelve solamente las clases del usuario autenticado.
+
+---
+
+```http
+GET /api/clases/{id}
+```
+
+Devuelve la clase solicitada solo si pertenece al usuario autenticado.
+
+---
+
+```http
+PUT /api/clases/{id}
+```
+
+Ejemplo de request:
+
+```json
+{
+	"fechaClaseUtc": "2026-06-15T18:00:00Z",
+	"titulo": "Clase actualizada de presente simple",
+	"objetivo": "Practicar oraciones afirmativas y negativas",
+	"contenidoTrabajado": "Do, does, don't y doesn't",
+	"observaciones": "Se recomienda seguir con ejercicios orales"
+}
+```
+
+---
+
+```http
+PATCH /api/clases/{id}/realizar
+```
+
+Marca una clase planificada como realizada.
+
+---
+
+```http
+PATCH /api/clases/{id}/cancelar
+```
+
+Marca una clase planificada como cancelada.
+
+---
+
+### Próxima etapa - Materiales de clase
 
 Estado: pendiente.
 
-El siguiente paso será implementar el módulo de clases usando las relaciones ya existentes entre usuario, alumno y materia.
+El siguiente paso será implementar el módulo de materiales asociados a una clase.
 
 Objetivo inicial:
 
-- Crear clases asociadas a un alumno propio y una materia propia.
-- Listar clases del usuario autenticado.
-- Consultar una clase por ID validando pertenencia.
-- Actualizar datos principales de una clase.
-- Cambiar el estado de una clase.
-- Dar de baja lógica o cancelar clases según la regla de negocio que definamos.
-- Evitar que un usuario acceda a clases, alumnos o materias de otro usuario.
+- Crear materiales asociados a una clase propia.
+- Listar materiales de una clase validando pertenencia.
+- Consultar un material por ID validando pertenencia.
+- Actualizar materiales propios.
+- Eliminar o dar de baja materiales según la regla de negocio que definamos.
+- Evitar que un usuario acceda a materiales de clases de otro usuario.
