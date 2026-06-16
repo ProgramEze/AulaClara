@@ -15,4 +15,6 @@ public class AlumnoMateria : EntidadBase
     public DateTime FechaAsignacionUtc { get; set; } = DateTime.UtcNow;
 
     public bool Activa { get; set; } = true;
+
+    public List<Clase> Clases { get; set; } = new();
 }

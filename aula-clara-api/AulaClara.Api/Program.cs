@@ -11,6 +11,8 @@ using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi;
 using System.Text;
+using AulaClara.Aplicacion.Clases.Servicios;
+using AulaClara.Aplicacion.Clases.Interfaces;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -74,6 +76,7 @@ builder.Services.AddScoped<IAutenticacionServicio, AutenticacionServicio>();
 builder.Services.AddScoped<IAlumnoServicio, AlumnoServicio>();
 builder.Services.AddScoped<IMateriaServicio, MateriaServicio>();
 builder.Services.AddScoped<IAlumnoMateriaServicio, AlumnoMateriaServicio>();
+builder.Services.AddScoped<IClaseServicio, ClaseServicio>();
 
 builder.Services.AgregarInfraestructura(builder.Configuration);
 

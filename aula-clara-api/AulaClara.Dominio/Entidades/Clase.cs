@@ -9,13 +9,9 @@ public class Clase : EntidadBase
 
     public Usuario? Usuario { get; set; }
 
-    public Guid AlumnoId { get; set; }
+    public Guid AlumnoMateriaId { get; set; }
 
-    public Alumno? Alumno { get; set; }
-
-    public Guid MateriaId { get; set; }
-
-    public Materia? Materia { get; set; }
+    public AlumnoMateria? AlumnoMateria { get; set; }
 
     public DateTime FechaClaseUtc { get; set; }
 

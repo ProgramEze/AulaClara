@@ -24,8 +24,10 @@ public class RepositorioAlumnoMaterias : IRepositorioAlumnoMaterias
                 alumnoMateria.Activa &&
                 alumnoMateria.Alumno != null &&
                 alumnoMateria.Alumno.UsuarioId == usuarioId &&
+                alumnoMateria.Alumno.Activo &&
                 alumnoMateria.Materia != null &&
-                alumnoMateria.Materia.UsuarioId == usuarioId);
+                alumnoMateria.Materia.UsuarioId == usuarioId &&
+                alumnoMateria.Materia.Activa);
     }
 
     public async Task<AlumnoMateria?> ObtenerPorAlumnoYMateriaAsync(Guid alumnoId, Guid materiaId)
@@ -48,6 +50,7 @@ public class RepositorioAlumnoMaterias : IRepositorioAlumnoMaterias
                 alumnoMateria.Activa &&
                 alumnoMateria.Alumno != null &&
                 alumnoMateria.Alumno.UsuarioId == usuarioId &&
+                alumnoMateria.Alumno.Activo &&
                 alumnoMateria.Materia != null &&
                 alumnoMateria.Materia.UsuarioId == usuarioId &&
                 alumnoMateria.Materia.Activa)
@@ -67,7 +70,8 @@ public class RepositorioAlumnoMaterias : IRepositorioAlumnoMaterias
                 alumnoMateria.Alumno.UsuarioId == usuarioId &&
                 alumnoMateria.Alumno.Activo &&
                 alumnoMateria.Materia != null &&
-                alumnoMateria.Materia.UsuarioId == usuarioId)
+                alumnoMateria.Materia.UsuarioId == usuarioId &&
+                alumnoMateria.Materia.Activa)
             .OrderBy(alumnoMateria => alumnoMateria.Alumno!.Nombre)
             .ToListAsync();
     }

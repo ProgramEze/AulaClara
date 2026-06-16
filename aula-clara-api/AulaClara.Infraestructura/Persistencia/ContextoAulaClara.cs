@@ -167,14 +167,9 @@ public class ContextoAulaClara : DbContext
             .HasForeignKey(clase => clase.UsuarioId)
             .OnDelete(DeleteBehavior.Restrict);
 
-        entidad.HasOne(clase => clase.Alumno)
-            .WithMany(alumno => alumno.Clases)
-            .HasForeignKey(clase => clase.AlumnoId)
-            .OnDelete(DeleteBehavior.Restrict);
-
-        entidad.HasOne(clase => clase.Materia)
-            .WithMany(materia => materia.Clases)
-            .HasForeignKey(clase => clase.MateriaId)
+        entidad.HasOne(clase => clase.AlumnoMateria)
+            .WithMany(alumnoMateria => alumnoMateria.Clases)
+            .HasForeignKey(clase => clase.AlumnoMateriaId)
             .OnDelete(DeleteBehavior.Restrict);
     }
 

@@ -3,6 +3,7 @@ using System;
 using AulaClara.Infraestructura.Persistencia;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -10,9 +11,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace AulaClara.Infraestructura.Persistencia.Migraciones
 {
     [DbContext(typeof(ContextoAulaClara))]
-    partial class ContextoAulaClaraModelSnapshot : ModelSnapshot
+    [Migration("20260614213646_AjustarClasesConAlumnoMateria")]
+    partial class AjustarClasesConAlumnoMateria
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder.HasAnnotation("ProductVersion", "10.0.9");
